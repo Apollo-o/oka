@@ -19,7 +19,7 @@ muse(r"C:/Users/Bob/Desktop/", 22, "enhance")
 
 :exclamation: Speeds will vary based on number of videos and file sizes.
 
-:exclamation: The enhance video capability is around 26 minutes per video on a CPU-bound system this will vary by device.
+:exclamation: The enhance video capability is around 26 minutes per video it was tested on a CPU-bound system this will vary by device.
 
 | Capabilities | Speed |
 |----|----|
