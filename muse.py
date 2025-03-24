@@ -1,325 +1,241 @@
+# Author: o-o
+# Date: 23/3/2025
+# Description: Muse Class
+
 import ffmpeg
 import cv2
 import os
 
-
 class muse:
-
-    def __init__(self, base_path, total_episodes, status="normal"):
-
-        self.base_path = base_path
-        self.imports = 0
-        self.flag = -1
-        self.modes = (128, 256)
-
-        self.ffmpeg = "./dependencies/ffmpeg.exe"
-        self.exif = r".\dependencies\exiftool.exe"
-
-        if os.path.isdir(base_path) and base_path[-1] == "/":
-            self.file_database = sorted(
-                [f"{base_path}{idx}" for idx in os.listdir(
-                    base_path) if idx.endswith(".mp4")], key=len)
-
-            self.setup_permissions(self.modes[0])
-            self.setup_files()
-
-            self.find_missing_episodes(total_episodes)
-            self.find_corruption()
-            self.find_duplicates_cmp()
-            self.find_duplicates_hash()
-            self.find_metadata()
-
-            if status.lower().strip() == "enhance":
-                self.find_enhance()
-
-            self.setup_permissions(self.modes[-1])
-
+    def __init__(self, _b_, toepi, fgb_dyu_sdyu___="normal"):
+        self.__sdau = _b_
+        self.dsajbdjbas = 0
+        self.cdsn = -1
+        self.__nifd_ = (128, 256)
+        self.djashsuhui = "./dependencies/ffmpeg.exe"
+        self.gfdono = r".\dependencies\exiftool.exe"
+        if os.path.isdir(_b_) and _b_[-1] == "/":
+            self.__s32__ = sorted(
+                [f"{_b_}{_n_}" for _n_ in os.listdir(
+                    _b_) if _n_.endswith(".mp4")], key=len)
+            self.__sias__(self.__nifd_[0])
+            self.sdi_fds_s()
+            self.gnfoni(toepi)
+            self.dasnodaoi()
+            self.sjbdja()
+            self.hmfgih()
+            self.mtfdgnd()
+            if fgb_dyu_sdyu___.lower().strip() == "enhance":
+                self.___bdiu_()
+            self.__sias__(self.__nifd_[-1])
         else:
-            print(f"[!] Invalid Directory: {self.base_path}")
+            print(f"[!] Invalid Directory: {self.__sdau}")
             exit(0)
-
-    def setup_permissions(self, code):
-        os.chmod(self.base_path, code)
-        for file in self.file_database:
-            os.chmod(file, code)
-
-    def setup_files(self):
-
-        temp = []
-        for idx, file in enumerate(self.file_database, start=1):
-            new_file = f"{self.base_path}{idx}.mp4"
-            if not (os.path.exists(new_file)):
-                os.rename(file, new_file)
-            temp.append(new_file)
-
-        self.file_database = temp
-
-    def change_title(self, title):
-
-        if input(f"Continue [yes][{title.rstrip(
-                "-")}-{self.file_database[0].split("/")[-1]}]: ") != 'yes':
+    def __sias__(self, code):
+        os.chmod(self.__sdau, code)
+        for kphj_ in self.__s32__:
+            os.chmod(kphj_, code)
+    def sdi_fds_s(self):
+        fdo_ = []
+        for __aa__, _saaq__ in enumerate(self.__s32__, start=1):
+            na_ = f"{self.__sdau}{__aa__}.mp4"
+            if not (os.path.exists(na_)):
+                os.rename(_saaq__, na_)
+            fdo_.append(na_)
+        self.__s32__ = fdo_
+    def vgvas(self, k_):
+        if input(f"Continue [yes][{k_.rstrip(
+                "-")}-{self.__s32__[0].split("/")[-1]}]: ") != 'yes':
             exit(0)
-
-        for file in self.file_database:
-
-            base = file.split("/")
-            new_title = f"{f"{"/".join(
-                base[:-1])}/"}{title.rstrip("-")}-{base[-1]}"
-
-            if not (os.path.exists(new_title)):
-                os.rename(file, new_title)
-
-    def find_missing_episodes(self, total_episodes):
-
-        count = 0
-        ep_values = list(range(1, total_episodes+1))
-        for idx, file in enumerate(self.file_database):
-
-            ep_num = int(file.split("/")[-1][:-4])
-
-            if ep_num in ep_values:
-                ep_values.remove(ep_num)
-            if idx == len(self.file_database)-1:
-                amount = len(self.file_database)-total_episodes
-
-                if amount < 0:
-                    print(f"[!] Missing {amount} | "
-                          f"Episodes {ep_values}")
-                    count += 1
-                elif amount > 0:
-                    print(f"[!] Extra +{amount} | " +
+        for vvsgd_ in self.__s32__:
+            __biifd_ = vvsgd_.split("/")
+            __idsuis__ = f"{f"{"/".join(
+                __biifd_[:-1])}/"}{k_.rstrip("-")}-{__biifd_[-1]}"
+            if not (os.path.exists(__idsuis__)):
+                os.rename(vvsgd_, __idsuis__)
+    def gnfoni(self, dsa_):
+        ofdnv = 0
+        fdsj_ = list(range(1, dsa_+1))
+        for isudsiua, ons__ in enumerate(self.__s32__):
+            jd0a = int(ons__.split("/")[-1][:-4])
+            if jd0a in fdsj_:
+                fdsj_.remove(jd0a)
+            if isudsiua == len(self.__s32__)-1:
+                ht0 = len(self.__s32__)-dsa_
+                if ht0 < 0:
+                    print(f"[!] Missing {ht0} | "
+                          f"Episodes {fdsj_}")
+                    ofdnv += 1
+                elif ht0 > 0:
+                    print(f"[!] Extra +{ht0} | " +
                           f"Episodes {[
-                            total_episodes + num for num in range(
-                                1, amount+1)]}")
-                    count += 1
-
-        if count == 0:
+                            dsa_ + h0gf for h0gf in range(
+                                1, ht0+1)]}")
+                    ofdnv += 1
+        if ofdnv == 0:
             print("[miss]\tNo missing episodes")
-            self.flag = 0
+            self.cdsn = 0
         else:
-            self.flag = -1
-
-    def find_duplicates_cmp(self):
-
-        if self.flag == 0:
-
+            self.cdsn = -1
+    def sjbdja(self):
+        if self.cdsn == 0:
             from filecmp import cmp
-
-            duplicates = []
-            for idx1, file in enumerate(self.file_database):
-
-                for element in self.file_database:
-
-                    if file == element:
+            oufd = []
+            for jtryw, nfos in enumerate(self.__s32__):
+                for dhasu in self.__s32__:
+                    if nfos == dhasu:
                         pass
-                    elif cmp(file, element, shallow=False):
-
-                        value1 = file.split("/")[-1][:-4]
-                        value2 = element.split("/")[-1][:-4]
-
+                    elif cmp(nfos, dhasu, shallow=False):
+                        rj0t = nfos.split("/")[-1][:-4]
+                        c83n8 = dhasu.split("/")[-1][:-4]
                         if not (
-                            f"{value1},{value2}" in duplicates) and not (
-                                value2 in str(duplicates)):
-                            duplicates.append(f"{value1}:{value2}")
-
-            if not (duplicates):
+                            f"{rj0t},{c83n8}" in oufd) and not (
+                                c83n8 in str(oufd)):
+                            oufd.append(f"{rj0t}:{c83n8}")
+            if not (oufd):
                 print("[cmp]\tNo duplicate episodes")
-                self.flag = 0
+                self.cdsn = 0
             else:
-                print(f"[cmp]\t{duplicates}")
-                self.flag = -1
-
-    def find_duplicates_hash(self, seconds=300):
-
-        if self.flag == 0:
-
+                print(f"[cmp]\t{oufd}")
+                self.cdsn = -1
+    def hmfgih(self, u67=300):
+        if self.cdsn == 0:
             from PIL.Image import fromarray
             from imagehash import phash
-
-            frames = []
-            for path in self.file_database:
-
-                video = cv2.VideoCapture(path)
-                video.set(
+            ntyi = []
+            for u9u in self.__s32__:
+                fe9rw = cv2.VideoCapture(u9u)
+                fe9rw.set(
                     cv2.CAP_PROP_POS_FRAMES, int(
-                        video.get(cv2.CAP_PROP_FPS)) * seconds)
-
+                        fe9rw.get(cv2.CAP_PROP_FPS)) * u67)
                 try:
-                    frames.append(phash(fromarray(video.read()[1])))
+                    ntyi.append(phash(fromarray(fe9rw.read()[1])))
                 except:
-                    frames.append(None)
-
-                video.release()
-
-            duplicates = []
-            for val1, frame1 in enumerate(frames, start=1):
-                for val2, frame2 in enumerate(frames, start=1):
-                    if frame1 and frame2 is not None:
-                        if val1 != val2 and (frame1 - frame2) < 0.9:
+                    ntyi.append(None)
+                fe9rw.release()
+            bhvc = []
+            for biire, bfhia in enumerate(ntyi, start=1):
+                for tjoir, etre in enumerate(ntyi, start=1):
+                    if bfhia and etre is not None:
+                        if biire != tjoir and (bfhia - etre) < 0.9:
                             if not (
-                                f"{val1}:{val2}" in duplicates) and not (
-                                    str(val2) in str(duplicates)):
-                                duplicates.append(f"{val1}:{val2}")
-
-            if not (duplicates):
+                                f"{biire}:{tjoir}" in bhvc) and not (
+                                    str(tjoir) in str(bhvc)):
+                                bhvc.append(f"{biire}:{tjoir}")
+            if not (bhvc):
                 print("[hash]\tNo duplicate episodes")
-                self.flag = 0
+                self.cdsn = 0
             else:
-                print(f"[hash]\t{duplicates}")
-                self.flag = -1
-
-    def find_corruption(self):
-
-        if self.flag == 0:
-
-            count = 0
-            for file in self.file_database:
-
-                file_out = f"{file[:-4]}_.mp4"
-
+                print(f"[hash]\t{bhvc}")
+                self.cdsn = -1
+    def dasnodaoi(self):
+        if self.cdsn == 0:
+            dbssa = 0
+            for dsdou in self.__s32__:
+                reoige = f"{dsdou[:-4]}_.mp4"
                 try:
-
-                    status = self.check_error(
-                        count, file, ffmpeg.input(file).output(
-                            file_out, f="mp4", vcodec="copy", acodec="copy"
-                            ).run(capture_stderr=True, cmd=self.ffmpeg
-                                  )[-1], file_out)
-
+                    rte = self.jhgjt(
+                        dbssa, dsdou, ffmpeg.input(dsdou).output(
+                            reoige, f="mp4", vcodec="copy", acodec="copy"
+                            ).run(capture_stderr=True, cmd=self.djashsuhui
+                                  )[-1], reoige)
                 except ffmpeg._run.Error as e:
-
-                    status = self.check_error(count, file, e.stderr, file_out)
-
-                if status == 1:
-                    count += 1
+                    rte = self.jhgjt(dbssa, dsdou, e.stderr, reoige)
+                if rte == 1:
+                    dbssa += 1
                 else:
-
-                    os.remove(file)
-                    os.rename(file_out, file)
-
-            if count == 0:
+                    os.remove(dsdou)
+                    os.rename(reoige, dsdou)
+            if dbssa == 0:
                 print("[corr]\tNo corrupt episodes")
-                self.flag = 0
-
-    def check_error(self, count, file, info, file_out):
-
-        error = str(info, 'utf-8').lower()
-        if "error" in error or "invalid" in error:
+                self.cdsn = 0
+    def jhgjt(self, gffdgdf, vbdfiufd, fosndodon, fdnggndfogd):
+        fsbdf = str(fosndodon, 'utf-8').lower()
+        if "error" in fsbdf or "invalid" in fsbdf:
             print(
-                f"[!] Corrupt | Episode {file.split(
+                f"[!] Corrupt | Episode {vbdfiufd.split(
                     "/")[-1][:-4]}")
-            os.remove(file_out)
-            self.flag = -1
+            os.remove(fdnggndfogd)
+            self.cdsn = -1
             return 1
-
-    def find_metadata(self):
-
-        if self.flag == 0:
-
-            run = f"{self.exif} -ext mp4 -all= {self.base_path}*.mp4 >&1 > nul"
-
+    def mtfdgnd(self):
+        if self.cdsn == 0:
+            fdnsofoisd = f"{self.gfdono} -ext mp4 -all= {self.__sdau}*.mp4 >&1 > nul"
             try:
-                status = str(
+                sdoa = str(
                     os.system(
-                        run)
+                        fdnsofoisd)
                     ).lower()
             except PermissionError:
-                status = "error"
-
-            [os.remove(f"{self.base_path}{idx}"
-                       ) for idx in os.listdir(
-                           self.base_path) if idx.endswith("_original")]
-
-            if status == "0" or status.find("error") != -1:
+                sdoa = "error"
+            [os.remove(f"{self.__sdau}{hidfsdf}"
+                       ) for hidfsdf in os.listdir(
+                           self.__sdau) if hidfsdf.endswith("_original")]
+            if sdoa == "0" or sdoa.find("error") != -1:
                 print("[exif]\tNo metadata left")
-                self.flag = 0
+                self.cdsn = 0
             else:
-                self.flag = -1
-
-    def find_enhance(self):
-
-        if self.flag == 0:
-
+                self.cdsn = -1
+    def ___bdiu_(self):
+        if self.cdsn == 0:
             from multiprocessing import cpu_count, Pool
-
-            self.imports = (cpu_count()//2, Pool)
-            files = [f"{self.base_path}temp_video.mp4",
-                     f"{self.base_path}temp_audio.mp4",
-                     f"{self.base_path}temp_output.mp4"]
-
-            for idx1, file in enumerate(self.file_database):
-
-                self.video_enhance(file, files[0])
-                self.extract_audio(file, files[1])
-                self.merge_files(files[0], files[1], files[2])
-                os.replace(files[2], file)
-
-            with open(files[2], 'w'):
+            self.dsajbdjbas = (cpu_count()//2, Pool)
+            nfigidg__ = [f"{self.__sdau}temp_video.mp4",
+                     f"{self.__sdau}temp_audio.mp4",
+                     f"{self.__sdau}temp_output.mp4"]
+            for _sdn_un_, gf_dg_ in enumerate(self.__s32__):
+                self.__bdsfsa__(gf_dg_, nfigidg__[0])
+                self.__fdsands__(gf_dg_, nfigidg__[1])
+                self.sfdd__u_a_(nfigidg__[0], nfigidg__[1], nfigidg__[2])
+                os.replace(nfigidg__[2], gf_dg_)
+            with open(nfigidg__[2], 'w'):
                 pass
-
-            self.delete_files(files)
+            self.dd__dsa__(nfigidg__)
             print("[cv2]\tNo denoise left")
-
         else:
-            self.flag = -1
-
-    def video_enhance(self, path, output):
-
-        video = cv2.VideoCapture(path)
-        writer = cv2.VideoWriter(output,
+            self.cdsn = -1
+    def __bdsfsa__(self, __dw_qn_, __bd__aib__):
+        _as__id__ = cv2.VideoCapture(__dw_qn_)
+        _dc_s__js = cv2.VideoWriter(__bd__aib__,
                                  cv2.VideoWriter_fourcc(*"mp4v"),
-                                 video.get(cv2.CAP_PROP_FPS),
-                                 (int(video.get(cv2.CAP_PROP_FRAME_WIDTH)),
-                                  int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))))
-
-        chunks = self.get_chunks(int(video.get(cv2.CAP_PROP_FRAME_COUNT)))
-
-        for idx, chunk in enumerate(chunks):
-
-            if idx == len(chunks)-1:
+                                 _as__id__.get(cv2.CAP_PROP_FPS),
+                                 (int(_as__id__.get(cv2.CAP_PROP_FRAME_WIDTH)),
+                                  int(_as__id__.get(cv2.CAP_PROP_FRAME_HEIGHT))))
+        s_b__ = self.i___b__(int(_as__id__.get(cv2.CAP_PROP_FRAME_COUNT)))
+        for _df_ad__, jbsad in enumerate(s_b__):
+            if _df_ad__ == len(s_b__)-1:
                 break
-
-            frames = []
-            for element in range(chunks[idx], chunks[idx+1]):
-
-                frames.append(video.read()[-1])
-
-            files = self.denoise_multiprocess(frames)
-
-            for file in files:
-                writer.write(file)
-
-        video.release()
-        writer.release()
-
-    def get_chunks(self, frames):
-
-        chunks = []
-        for idx in range(1, frames, frames//10):
-            chunks.append(idx)
-        return chunks + [(frames - chunks[-1]) + chunks[-1]]
-
-    def denoise_multiprocess(self, frames):
-        with self.imports[1](processes=self.imports[0]) as pool:
-            return pool.map(self.denoise_frame, frames)
-
-    def denoise_frame(self, frame):
-        return cv2.fastNlMeansDenoisingColored(frame, None, 10, 10, 7, 5)
-
-    def extract_audio(self, file, output):
-        ffmpeg.input(file).output(
-            output, vn=None, acodec="copy").run(
-                capture_stderr=True, cmd=self.ffmpeg, overwrite_output=True)
-
-    def merge_files(self, video, audio, output):
-        ffmpeg.output(ffmpeg.input(video),
-                      ffmpeg.input(audio),
-                      output, vcodec="copy",
+            _dsf_s_ = []
+            for element in range(s_b__[_df_ad__], s_b__[_df_ad__+1]):
+                _dsf_s_.append(_as__id__.read()[-1])
+            _d_s__ = self._cdkkc_a_(_dsf_s_)
+            for __ssghds__ in _d_s__:
+                _dc_s__js.write(__ssghds__)
+        _as__id__.release()
+        _dc_s__js.release()
+    def i___b__(self, bjd):
+        __gfdst_ = []
+        for idx in range(1, bjd, bjd//10):
+            __gfdst_.append(idx)
+        return __gfdst_ + [(bjd - __gfdst_[-1]) + __gfdst_[-1]]
+    def _cdkkc_a_(self, i_df__):
+        with self.dsajbdjbas[1](processes=self.dsajbdjbas[0]) as pool:
+            return pool.map(self.d__da__, i_df__)
+    def d__da__(self, n_ofd__):
+        return cv2.fastNlMeansDenoisingColored(n_ofd__, None, 10, 10, 7, 5)
+    def __fdsands__(self, sa____nfddo, s_aj__):
+        ffmpeg.input(sa____nfddo).output(
+            s_aj__, vn=None, acodec="copy").run(
+                capture_stderr=True, cmd=self.djashsuhui, overwrite_output=True)
+    def sfdd__u_a_(self, dsnidos_, _sa_p_, sn_a_os_):
+        ffmpeg.output(ffmpeg.input(dsnidos_),
+                      ffmpeg.input(_sa_p_),
+                      sn_a_os_, vcodec="copy",
                       acodec="copy").run(
-                          capture_stderr=True, cmd=self.ffmpeg,
+                          capture_stderr=True, cmd=self.djashsuhui,
                           overwrite_output=True)
-
-    def delete_files(self, files):
+    def dd__dsa__(self, _f_d_):
         try:
-            [os.remove(file) for file in files]
+            [os.remove(_dddddd_) for _dddddd_ in _f_d_]
         except OSError:
             pass
