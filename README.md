@@ -3,7 +3,10 @@
 An enhancement tool for videos that works as follows.
 
 ## Setup
-Click on **make.cmd** in the dependencies folder to install all dependencies.
+Execute **make.cmd** in the dependencies folder and install the following modules.
+```
+pip install pillow ImageHash ffmpeg-python opencv-python --user
+```
 
 ## Enhancement
 Edit the **main.py** and set the arguments.
