@@ -1,7 +1,3 @@
-# Author: o-o
-# Date: 23/3/2025
-# Description: Muse Class
-
 import ffmpeg
 import cv2
 import os
@@ -18,14 +14,12 @@ class muse:
 
         self.ffmpeg = "./dependencies/ffmpeg.exe"
         self.exif = r".\dependencies\exiftool.exe"
-        self.script = r".\dependencies\install.cmd >nul 2>&1"
 
         if os.path.isdir(base_path) and base_path[-1] == "/":
             self.file_database = sorted(
                 [f"{base_path}{idx}" for idx in os.listdir(
                     base_path) if idx.endswith(".mp4")], key=len)
 
-            self.setup_dependencies()
             self.setup_permissions(self.modes[0])
             self.setup_files()
 
@@ -43,8 +37,6 @@ class muse:
         else:
             print(f"[!] Invalid Directory: {self.base_path}")
             exit(0)
-
-    def setup_dependencies(self): os.system(self.script)
 
     def setup_permissions(self, code):
         os.chmod(self.base_path, code)
