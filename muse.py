@@ -1,3 +1,7 @@
+# Author: o-o
+# Date: 23/3/2025
+# Description: Muse Class
+
 import ffmpeg
 import cv2
 import os
