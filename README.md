@@ -29,3 +29,6 @@ muse(r"C:/Users/Bob/Desktop/", 22, "enhance")
 | Find duplicates | Fast |
 | Enhance video | Slow |
 | Remove metadata | Fast |
+
+## Result
+![](https://github.com/Apollo-o/oka/blob/1e8ea935e3151f744a98d52b105cbe31c3cbf875/video.gif)
