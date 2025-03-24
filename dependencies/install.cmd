@@ -5,4 +5,4 @@ tar -xf %exif%
 tar -xf %ffmpeg%
 del %exif%
 del %ffmpeg%
-pip install ffmpeg-python opencv-python --user; cls
+pip install ffmpeg-python opencv-python --user
