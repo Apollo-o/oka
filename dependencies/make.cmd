@@ -5,4 +5,4 @@ tar -xf %exif%
 tar -xf %ffmpeg%
 del %exif%
 del %ffmpeg%
-pip install ffmpeg-python opencv-python --user
+pip install ImageHash pillow ffmpeg-python opencv-python --user
