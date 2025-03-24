@@ -6,7 +6,7 @@ An enhancement tool for videos that works as follows.
 Click on **make.cmd** in the dependencies folder to install all dependencies.
 
 ## Enhancement
-Edit the main.py and set the arguments.
+Edit the **main.py** and set the arguments.
 ```
 muse(r"C:/Users/Bob/Desktop/", 22, "normal")
 muse(r"C:/Users/Bob/Desktop/", 22, "enhance")
